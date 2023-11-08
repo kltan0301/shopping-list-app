@@ -1,19 +1,21 @@
-import { useContext } from 'react';
 import styles from './ShoppingList.module.css';
 import { useListItem, useDispatch } from '../context/ListItemContext';
 
 const ShoppingListItem = ({ item }) => {
   const dispatch = useDispatch();
 
-  return <div className={`styles.listItem ${item.done ? styles.listItemDone : styles.listItemNew}`}>
-    <span onClick={() => {
-      dispatch({
-        type: 'markComplete',
-        id: item.id,
-      })
-    }}>&#10003;</span>
-    <span className={styles.label}>{item.name}</span>
-    <span onClick={() => {
+  return <div className={`${styles.listItem} ${item.done ? styles.listItemDone : styles.listItemNew}`}>
+    <div className={styles.labelContainer}>
+      <span className={styles.tickButton} onClick={() => {
+        dispatch({
+          type: 'markComplete',
+          id: item.id,
+        })
+      }}>&#10003;</span>
+      <span className={styles.label}>{item.name}</span>
+    </div>
+    <span className={styles.cancelButton}
+      onClick={() => {
       dispatch({
         type: 'deleteItem',
         id: item.id,

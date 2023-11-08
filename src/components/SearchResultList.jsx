@@ -7,7 +7,7 @@ const SearchResultList = ({ list }) => {
   if (!list.length) { return <></> }
   return <div className={styles.resultList}>
     {list.map(item => {
-      return <div key={item} onClick={() => {
+      return <div key={item} className={styles.resultItem} onClick={() => {
         dispatch({
           type: 'addItem',
           itemName: item,

@@ -1,8 +1,7 @@
 import styles from './SearchBox.module.css';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import useDebounce from '../hooks/useDebounce';
 import SearchResultList from './SearchResultList';
-import { ListItemDispatchContext } from '../context/ListItemContext';
 
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,6 +14,9 @@ const SearchBox = () => {
       )
       const data = await result.json();
       setSearchResults(data);
+    }
+    if (searchTerm.length === 0){
+       setSearchResults([]);
     }
   }, [searchTerm], 500);
 

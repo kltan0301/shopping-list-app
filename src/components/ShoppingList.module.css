@@ -10,3 +10,24 @@
 .listItemDone {
   color: grey;
 }
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 10px 5px;
+}
+
+.tickButton:hover {
+  color: grey;
+  cursor: pointer;
+}
+
+.tickButton {
+  margin-right: 5px;
+}
+
+.cancelButton:hover {
+  color: red;
+  cursor: pointer;
+}
