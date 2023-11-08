@@ -1,0 +1,12 @@
+.shoppingListContainer {
+  border: 1px solid black;
+  margin-top: 10px;
+}
+
+.listItemDone .label {
+  text-decoration: line-through;
+}
+
+.listItemDone {
+  color: grey;
+}
