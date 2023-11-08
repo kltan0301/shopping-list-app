@@ -1,42 +1,64 @@
 import SearchBox from './SearchBox';
 import ShoppingList from './ShoppingList';
 import styles from './ShoppingListApp.module.css';
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+const INITIAL_LIST = [];
+
+const shoppingListReducer = (listItems, action) => {
+  switch(action.type) {
+    case 'addItem':
+      return [
+        ...listItems,
+        {
+         id: new Date().getTime(),
+          name: action.itemName,
+          done: false,
+        }
+      ]
+    case 'markComplete':
+      return listItems.map(item => {
+        if (item.id === action.id) {
+          return {
+            ...item,
+            done: !item.done,
+          }
+        }
+        return item;
+      })
+    case 'deleteItem':
+      return listItems.filter((listItem) => {
+        return listItem.id !== action.id;
+      })
+    default:
+      throw new Error('Invalid action');
+  }
+}
 
 const ShoppingListApp = () => {
-  const [shoppingListItems, setShoppingListItems] = useState([]);
+  const [shoppingListItems, dispatch] = useReducer(shoppingListReducer, INITIAL_LIST);
 
   return <div className={styles.searchBoxContainer}>
     <h1 className={styles.header}>My Shopping List</h1>
     <SearchBox className={styles.searchField} onSelectItem={(itemName) => {
-      setShoppingListItems([
-        ...shoppingListItems,
-        {
-          id: new Date().getTime(),
-          name: itemName,
-          done: false,
-        }
-      ])
+      dispatch({
+        type: 'addItem',
+        itemName,
+      })
     }}/>
     <ShoppingList
       items={shoppingListItems}
       onMarkComplete={(itemId) => {
-        const updatedShoppingListItems = shoppingListItems.map(item => {
-          if (item.id === itemId) {
-            return {
-              ...item,
-              done: !item.done,
-            }
-          }
-          return item;
+        dispatch({
+          type: 'markComplete',
+          id: itemId,
         })
-        setShoppingListItems(updatedShoppingListItems);
       }}
       onDelete={(itemId) => {
-        const updatedShoppingListItems = shoppingListItems.filter((listItem) => {
-          return listItem.id !== itemId;
+        dispatch({
+          type: 'deleteItem',
+          id: itemId,
         })
-        setShoppingListItems(updatedShoppingListItems)
       }}
     />
   </div>
