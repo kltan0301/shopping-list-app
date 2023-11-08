@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import styles from './ShoppingList.module.css';
-import { ListItemContext, ListItemDispatchContext } from '../context/ListItemContext';
+import { useListItem, useDispatch } from '../context/ListItemContext';
 
-const ShoppingListItem = ({ item, onMarkComplete, onDelete }) => {
-  const dispatch = useContext(ListItemDispatchContext);
+const ShoppingListItem = ({ item }) => {
+  const dispatch = useDispatch();
 
   return <div className={`styles.listItem ${item.done ? styles.listItemDone : styles.listItemNew}`}>
     <span onClick={() => {
@@ -23,7 +23,7 @@ const ShoppingListItem = ({ item, onMarkComplete, onDelete }) => {
 }
 
 const ShoppingList = ({ onMarkComplete, onDelete }) => {
-  const items = useContext(ListItemContext);
+  const items = useListItem();
   if (!items.length) { return <></> }
   return <div className={styles.shoppingListContainer}>
     {items.map((item) => {

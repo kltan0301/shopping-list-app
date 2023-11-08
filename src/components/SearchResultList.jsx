@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import styles from './SearchResultList.module.css';
-import { ListItemDispatchContext } from '../context/ListItemContext';
+import { useDispatch } from '../context/ListItemContext';
 
 const SearchResultList = ({ list }) => {
-  const dispatch = useContext(ListItemDispatchContext);
+  const dispatch = useDispatch();
 
   if (!list.length) { return <></> }
   return <div className={styles.resultList}>
