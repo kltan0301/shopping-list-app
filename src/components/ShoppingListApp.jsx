@@ -1,3 +1,4 @@
+import { ListItemContext, ListItemDispatchContext } from '../context/ListItemContext';
 import SearchBox from './SearchBox';
 import ShoppingList from './ShoppingList';
 import styles from './ShoppingListApp.module.css';
@@ -38,30 +39,15 @@ const shoppingListReducer = (listItems, action) => {
 const ShoppingListApp = () => {
   const [shoppingListItems, dispatch] = useReducer(shoppingListReducer, INITIAL_LIST);
 
-  return <div className={styles.searchBoxContainer}>
-    <h1 className={styles.header}>My Shopping List</h1>
-    <SearchBox className={styles.searchField} onSelectItem={(itemName) => {
-      dispatch({
-        type: 'addItem',
-        itemName,
-      })
-    }}/>
-    <ShoppingList
-      items={shoppingListItems}
-      onMarkComplete={(itemId) => {
-        dispatch({
-          type: 'markComplete',
-          id: itemId,
-        })
-      }}
-      onDelete={(itemId) => {
-        dispatch({
-          type: 'deleteItem',
-          id: itemId,
-        })
-      }}
-    />
-  </div>
+  return <ListItemContext.Provider value={shoppingListItems}>
+    <ListItemDispatchContext.Provider value={dispatch}>
+      <div className={styles.searchBoxContainer}>
+        <h1 className={styles.header}>My Shopping List</h1>
+        <SearchBox className={styles.searchField} />
+        <ShoppingList />
+      </div>
+    </ListItemDispatchContext.Provider>
+  </ListItemContext.Provider>
 }
 
 export default ShoppingListApp;

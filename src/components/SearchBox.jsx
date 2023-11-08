@@ -1,9 +1,10 @@
 import styles from './SearchBox.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import useDebounce from '../hooks/useDebounce';
 import SearchResultList from './SearchResultList';
+import { ListItemDispatchContext } from '../context/ListItemContext';
 
-const SearchBox = ({ onSelectItem }) => {
+const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -26,7 +27,7 @@ const SearchBox = ({ onSelectItem }) => {
         setSearchTerm(e.target.value);
       }}
     />
-    <SearchResultList list={searchResults} onSelectItem={onSelectItem}/>
+    <SearchResultList list={searchResults} />
   </>
 }
 
